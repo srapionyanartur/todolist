@@ -10,8 +10,8 @@ export type filterValuesType = "all" | "completed" | "active"
 function App() {
 
 let initTasks = [
-  {id: v1(), title: "CSS", isDone: true },
-  {id: v1(), title: "JS", isDone: true },
+  {id: v1(), title: "CSS", isDone: false },
+  {id: v1(), title: "JS", isDone: false },
   {id: v1(), title: "React", isDone: false }
 ]
 
@@ -31,10 +31,17 @@ function removeTask(id: string) {
 }
 
 function addTask (title: string) {
-  var newTask = {id: v1(), title, isDone: false}
-  
+  var newTask = {id: v1(), title, isDone: false} 
   var newTasks = [newTask,...tasks]
   setTasks(newTasks)
+}
+
+function changeStatus (taskId: string, isDone: boolean) {
+  var task = tasks.find ( t => t.id === taskId )
+  if (task) {
+    task.isDone = isDone
+  } 
+  setTasks([...tasks]) 
 }
 
 function changeFilter (value: filterValuesType) {
@@ -57,7 +64,10 @@ if (filter === "active") {
                 tasks = {taskForTodoList}
                 removeTask = {removeTask}
                 changeFilter = {changeFilter}
-                addTask = {addTask} />
+                addTask = {addTask}
+                changeTaskStatus = {changeStatus}
+                filter = {filter} />
+                 
    
     </div>
   );
